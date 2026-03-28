@@ -20,7 +20,12 @@ Skopiuj `.env.example` i uzupelnij wartosci:
 - `BREVO_LIST_ID` - ID listy odbiorcow w Brevo.
 - `BREVO_SENDER_EMAIL` - zweryfikowany nadawca w Brevo (opcjonalne, wymagane do autorespondera).
 - `BREVO_SENDER_NAME` - nazwa nadawcy (opcjonalne).
+- `BREVO_REPLY_TO_EMAIL` - reply-to dla odbiorcy (opcjonalne, zalecane).
+- `BREVO_REPLY_TO_NAME` - nazwa dla reply-to (opcjonalne).
 - `BREVO_THANK_YOU_SUBJECT` - temat autorespondera (opcjonalne).
+- `BREVO_INSTAGRAM_URL` - URL do profilu Instagram (opcjonalne).
+- `BREVO_LOGO_URL` - publiczny URL logo (opcjonalne, zalecane).
+- `BREVO_UNSUBSCRIBE_URL` - URL wypisu (zalecane dla dostarczalnosci).
 
 ## Konfiguracja Brevo krok po kroku
 
@@ -67,3 +72,4 @@ Endpoint:
 - Nie wystawiaj `BREVO_API_KEY` po stronie frontendu.
 - Na produkcji trzymaj endpoint tylko po HTTPS.
 - Przed kampania zrob testy na realnych skrzynkach: Gmail + Outlook.
+- Dla lepszej dostarczalnosci ustaw `BREVO_UNSUBSCRIBE_URL`, `reply-to` i publiczny URL logo.
