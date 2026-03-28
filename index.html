@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webeiilin - Don't You Overload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Helvetica", "Inter", Arial, sans-serif;
+        }
+        
+        /* Input style override for browser autofill */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+            -webkit-text-fill-color: white !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        /* Background gradient adjusted to match the prototype */
+        .bg-custom-gradient {
+            background: linear-gradient(115deg, #2e1f1a 0%, #0d0d0d 60%, #000000 100%);
+        }
+
+        .form-status.success {
+            color: #8df0b8;
+        }
+
+        .form-status.error {
+            color: #ff8e8e;
+        }
+
+        #submit-btn:disabled {
+            opacity: 0.72;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body class="bg-custom-gradient min-h-screen text-white flex flex-col items-center justify-center p-6 selection:bg-white selection:text-black">
+
+    <div class="w-full max-w-3xl flex flex-col items-center">
+        
+        <!-- LOGO SECTION -->
+        <div class="flex flex-col items-center mb-10">
+            <img src="./webeillin (1).png" alt="webeiilin logo" class="w-[320px] max-w-[86vw] h-auto select-none">
+        </div>
+
+        <!-- MAIN HEADING -->
+        <div class="w-full mb-6 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-wide inline-block leading-[1.15]">
+                <span class="inline-flex items-center">
+                    <svg width="18" height="28" viewBox="0 0 18 30" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                        <path d="M11 0L0 17H8L6 30L18 11H9.5L11 0Z" fill="url(#paint_lightning)"/>
+                        <defs>
+                            <linearGradient id="paint_lightning" x1="9" y1="0" x2="9" y2="30" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#FF9354"/>
+                                <stop offset="1" stop-color="#ED4E31"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="md:hidden">DON'T</span>
+                    <span class="hidden md:inline">DON'T YOU OVERLOAD</span>
+                </span>
+                <span class="block md:hidden">YOU OVERLOAD</span>
+            </h1>
+        </div>
+
+        <!-- SUBTITLE -->
+        <p class="text-xl md:text-[22px] font-normal mb-14 tracking-wide text-center">
+            Get early access to unique <em class="italic font-normal">webeiilin</em> drop
+        </p>
+
+        <!-- FORM -->
+        <form id="lead-form" class="flex flex-col sm:flex-row items-center sm:items-end justify-center gap-6 mb-2 w-full max-w-xl" novalidate>
+            <!-- Email Input -->
+            <div class="relative w-full sm:w-[320px]">
+                <input 
+                    id="email"
+                    name="email"
+                    type="email" 
+                    placeholder="Enter your e-mail" 
+                    autocomplete="email"
+                    required
+                    class="w-full bg-transparent border-b-[2px] border-white text-white text-lg pb-2 px-1 text-center focus:outline-none placeholder:text-white placeholder:italic placeholder:text-center italic"
+                />
+            </div>
+            <input
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+                class="absolute left-[-9999px] w-px h-px opacity-0 pointer-events-none"
+            />
+            <!-- Submit Button -->
+            <button 
+                id="submit-btn"
+                type="submit" 
+                class="border-[2px] border-white text-white text-lg px-8 py-[10px] uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300 w-full sm:w-auto font-medium"
+            >
+                Join
+            </button>
+        </form>
+        <p id="form-status" class="form-status min-h-[1.25rem] text-center text-sm" role="status" aria-live="polite"></p>
+
+        <!-- DISCOUNT TEXT -->
+        <p class="text-[15px] font-normal tracking-wide mt-2 text-center">
+            + 10% off your first order
+        </p>
+
+        <!-- INSTAGRAM ICON -->
+        <div class="mt-16 md:mt-24">
+            <a href="https://instagram.com/webeiilin" target="_blank" rel="noreferrer noopener" class="inline-block hover:opacity-75 transition-opacity duration-300" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+      window.LEAD_FORM_CONFIG = {
+        endpoint: "/api/lead",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        listName: "webeillin-drop-list",
+        source: "landing-page"
+      };
+    </script>
+    <script src="./app.js" defer></script>
+</body>
+</html>
