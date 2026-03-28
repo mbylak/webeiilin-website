@@ -54,6 +54,28 @@ async function brevoRequest(path, apiKey, body) {
   return response;
 }
 
+async function readRawBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk;
+    });
+    req.on("end", () => resolve(body));
+    req.on("error", reject);
+  });
+}
+
+async function parsePayload(req) {
+  if (typeof req.body === "string") {
+    return JSON.parse(req.body || "{}");
+  }
+  if (req.body && typeof req.body === "object") {
+    return req.body;
+  }
+  const raw = await readRawBody(req);
+  return raw ? JSON.parse(raw) : {};
+}
+
 module.exports = async (req, res) => {
   if (req.method === "OPTIONS") {
     res.setHeader("Allow", "POST, OPTIONS");
@@ -69,7 +91,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const payload = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+    const payload = await parsePayload(req);
     const email = sanitizeText(payload.email || "", 254).toLowerCase();
     const honeypot = sanitizeText(payload.website || "", 200);
 
@@ -85,8 +107,12 @@ module.exports = async (req, res) => {
 
     const apiKey = process.env.BREVO_API_KEY;
     const listId = Number(process.env.BREVO_LIST_ID);
-    if (!apiKey || !Number.isFinite(listId)) {
-      json(res, 500, { ok: false, error: "Brevo env is missing" });
+    if (!apiKey) {
+      json(res, 500, { ok: false, error: "Server config error: BREVO_API_KEY is missing" });
+      return;
+    }
+    if (!Number.isInteger(listId) || listId <= 0) {
+      json(res, 500, { ok: false, error: "Server config error: BREVO_LIST_ID must be a positive integer" });
       return;
     }
 
